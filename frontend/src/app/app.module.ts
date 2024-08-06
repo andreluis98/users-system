@@ -9,6 +9,7 @@ import { CreateComponent } from './create/create.component';
 import { DeleteComponent } from './delete/delete.component';
 import { SearchCnpjComponent } from './search-cnpj/search-cnpj.component';
 import { ListComponent } from './list/list.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ListComponent } from './list/list.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,16 +13,16 @@ export class LoginComponent implements OnInit{
   constructor(private clientsService: ServiceApiService){}
   
   ngOnInit(): void {
-    this.login(this.username, this.senha)
   }
 
   login(user: string, pass: string){
     this.clientsService.getLogin(user, pass).pipe(
       catchError(error => {
+        console.error('Login failed', error);
         return error.error.message
       })
     ).subscribe(resp => {
-      console.log(resp);
+      console.log('Login successful', resp);
       
     })
   }
