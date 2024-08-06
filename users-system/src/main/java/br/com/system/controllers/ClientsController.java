@@ -35,16 +35,28 @@ public class ClientsController {
 	}
 	
 	//Listar Cliente por Razao Social	
-	@GetMapping(value = "/razaoSocial/{razaoSocial}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Client findByRazaoSocial(@PathVariable(value="razaoSocial") String razaoSocial) throws Exception {
-		return service.findByRazaoSocial(razaoSocial);
-	}
+	//@GetMapping(value = "/razaoSocial/{razaoSocial}", produces = MediaType.APPLICATION_JSON_VALUE)
+	//public Client findByRazaoSocial(@PathVariable(value="razaoSocial") String razaoSocial) throws Exception {
+	//	return service.findByRazaoSocial(razaoSocial);
+	//}
 	
 	//Listar Cliente por CNPJ
-	@GetMapping(value = "/{cnpj}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Client findByCnpj(@PathVariable(value="cnpj") String cnpj) throws Exception {
-		return service.findByCnpj(cnpj);
-	}
+	//@GetMapping(value = "/{cnpj}", produces = MediaType.APPLICATION_JSON_VALUE)
+	//public Client findByCnpj(@PathVariable(value="cnpj") String cnpj) throws Exception {
+	//	return service.findByCnpj(cnpj);
+	//}
+	
+	// Listar Cliente por Razao Social	
+		@GetMapping(value = "/razaoSocial/{razaoSocial}", produces = MediaType.APPLICATION_JSON_VALUE)
+		public List<Client> findByRazaoSocial(@PathVariable(value="razaoSocial") String razaoSocial) {
+			return service.findByRazaoSocial(razaoSocial);
+		}
+		
+		// Listar Cliente por CNPJ
+		@GetMapping(value = "/{cnpj}", produces = MediaType.APPLICATION_JSON_VALUE)
+		public Client findByCnpj(@PathVariable(value="cnpj") String cnpj) {
+			return service.findByCnpj(cnpj);
+		}
 	
 	//Criar Cliente
 	@PostMapping(

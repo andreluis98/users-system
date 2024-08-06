@@ -28,23 +28,41 @@ public class ClientServices {
 	}
 	
 	//Listar Cliente por Razao Social
-	public Client findByRazaoSocial(String razaoSocial) {
-		logger.info("Finding one Client by Razao Social");
-		Client client = new Client();
-		return repository.findByRazaoSocial(razaoSocial).orElseThrow(() -> new ResourceNotFoundException("No records found for this Razao Social!"));
-	}
+	//public Client findByRazaoSocial(String razaoSocial) {
+	//	logger.info("Finding one Client by Razao Social");
+	//	Client client = new Client();
+	//	return repository.findByRazaoSocial(razaoSocial).orElseThrow(() -> new ResourceNotFoundException("No records found for this Razao Social!"));
+	//}
 	
 	//Listar Cliente por CNPJ
-	public Client findByCnpj(String cnpj) {
-		logger.info("Finding one Client by CNPJ");
-		Client client = new Client();
-		return repository.findByCnpj(cnpj).orElseThrow(() -> new ResourceNotFoundException("No records found for this CNPJ!"));
-	}
+	//public Client findByCnpj(String cnpj) {
+	//	logger.info("Finding one Client by CNPJ");
+	//	Client client = new Client();
+	//	return repository.findByCnpj(cnpj).orElseThrow(() -> new ResourceNotFoundException("No records found for this CNPJ!"));
+	//}
+	
+	// Listar Cliente por Razao Social
+    public List<Client> findByRazaoSocial(String razaoSocial) {
+        logger.info("Finding clients by Razao Social");
+        List<Client> clients = repository.findByRazaoSocial(razaoSocial);
+        if (clients.isEmpty()) {
+            throw new ResourceNotFoundException("No records found for this Razao Social!");
+        }
+        return clients;
+    }
+    
+    // Listar Cliente por CNPJ
+    public Client findByCnpj(String cnpj) {
+        logger.info("Finding client by CNPJ");
+        return repository.findByCnpj(cnpj)
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this CNPJ!"));
+    }
+	
 	
 	//Criar Cliente
 	public Client create(Client client) throws Exception {
 		logger.info("Creating one Client");
-		
+        client.formartarCnpj();
 		String status = client.getStatus().toUpperCase();
 	    if (!status.equals("ATIVO") && !status.equals("INATIVO")) {
 	        throw new Exception("Status deve ser 'ATIVO' ou 'INATIVO'.");
@@ -61,7 +79,7 @@ public class ClientServices {
 	//Editar Cliente
 	public Client update(Client client) {
 		logger.info("Updating one Client");
-		
+		client.formartarCnpj();
 		var entity = repository.findById(client.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 		
 		entity.setCnpj(client.getCnpj());

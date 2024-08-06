@@ -3,6 +3,8 @@ package br.com.system.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -29,9 +31,11 @@ public class Client implements Serializable{
 	@Column(name = "razao_social", nullable = false)
 	private String razaoSocial;
 	
+	@JsonIgnore
 	@Column(nullable = false)
 	private String usuario;
 	
+	@JsonIgnore
 	@Column(nullable = false)
 	private String senha;
 	
@@ -106,5 +110,9 @@ public class Client implements Serializable{
 				&& Objects.equals(razaoSocial, other.razaoSocial) && Objects.equals(senha, other.senha)
 				&& Objects.equals(status, other.status) && Objects.equals(usuario, other.usuario);
 	}
+	
+	public void formartarCnpj() {
+        this.cnpj = this.cnpj.replaceAll("\\D", "");
+    }
 	
 }
