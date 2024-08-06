@@ -27,20 +27,6 @@ public class ClientServices {
 		return repository.findAll();
 	}
 	
-	//Listar Cliente por Razao Social
-	//public Client findByRazaoSocial(String razaoSocial) {
-	//	logger.info("Finding one Client by Razao Social");
-	//	Client client = new Client();
-	//	return repository.findByRazaoSocial(razaoSocial).orElseThrow(() -> new ResourceNotFoundException("No records found for this Razao Social!"));
-	//}
-	
-	//Listar Cliente por CNPJ
-	//public Client findByCnpj(String cnpj) {
-	//	logger.info("Finding one Client by CNPJ");
-	//	Client client = new Client();
-	//	return repository.findByCnpj(cnpj).orElseThrow(() -> new ResourceNotFoundException("No records found for this CNPJ!"));
-	//}
-	
 	// Listar Cliente por Razao Social
     public List<Client> findByRazaoSocial(String razaoSocial) {
         logger.info("Finding clients by Razao Social");
