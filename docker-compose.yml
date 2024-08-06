@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:12-bullseye
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - "pgdata:/var/lib/postgresql/data"
+      - "./teste.sql:/docker-entrypoint-initdb.d/init.sql"
+    ports:
+      - "7000:5432"
+    networks:
+      - app-network
+
+  java:
+    build: ./java/
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/users_system
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend/
+    volumes:
+      - ./frontend/src:/usr/src/app/src
+    networks:
+      - app-network
+
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "8010:80"
+    networks:
+      - app-network
+
+volumes:
+  pgdata:
+
+networks:
+  app-network:
+    driver: bridge

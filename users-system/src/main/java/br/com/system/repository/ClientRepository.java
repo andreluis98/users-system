@@ -10,7 +10,6 @@ import br.com.system.model.Client;
 
 public interface ClientRepository  extends JpaRepository<Client, Long> {
 	Optional<Client> findByCnpj(String cnpj);
-	//Optional<Client> findByRazaoSocial(String razaoSocial);
 	List<Client> findByRazaoSocial(String razaoSocial);
 	Optional<Client> findByUsuario(String usuario); 
 	Client findByUsuarioAndSenha(String usuario, String senha);
