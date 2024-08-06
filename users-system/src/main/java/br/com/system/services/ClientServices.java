@@ -53,6 +53,7 @@ public class ClientServices {
 		if (repository.findByUsuario(client.getUsuario()).isPresent()) {
 	            throw new Exception("Usuário já existe.");
 	        }
+		
 		 client.setStatus(status);
 		return repository.save(client);
 	}

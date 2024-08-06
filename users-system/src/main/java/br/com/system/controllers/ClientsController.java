@@ -1,8 +1,11 @@
 package br.com.system.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -68,18 +71,19 @@ public class ClientsController {
 	
 	//Login
 	@PostMapping(
-			value = "/login",
-			consumes= MediaType.APPLICATION_JSON_VALUE, 
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Client> login(@RequestBody Client cliente) {
-        Client loggedInCliente = service.login(cliente.getUsuario(), cliente.getSenha());
-        if (loggedInCliente != null) {
-            return ResponseEntity.ok(loggedInCliente);
-        } else {
-            return ResponseEntity.status(401).build();
-        }
-    }
+	        value = "/login",
+	        consumes = MediaType.APPLICATION_JSON_VALUE,
+	        produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, String>> login(@RequestBody Client cliente) {
+	    Map<String, String> response = new HashMap<>();
+	    
+	    if (service.login(cliente.getUsuario(), cliente.getSenha()) != null) {
+	        response.put("message", "Login bem-sucedido.");
+	        return ResponseEntity.ok(response);
+	    } else {
+	        response.put("message", "Usuário ou senha incorretos.");
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+	    }
+	}
 	
-	
-
 }
