@@ -29,11 +29,9 @@ public class Client implements Serializable{
 	@Column(name = "razao_social", nullable = false)
 	private String razaoSocial;
 	
-	@JsonIgnore
 	@Column(nullable = false)
 	private String usuario;
 	
-	@JsonIgnore
 	@Column(nullable = false)
 	private String senha;
 	

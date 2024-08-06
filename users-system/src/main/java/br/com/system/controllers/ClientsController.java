@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.system.dto.ClientDTO;
 import br.com.system.model.Client;
 import br.com.system.services.ClientServices;
 
@@ -53,6 +54,15 @@ public class ClientsController {
 	public Client create(@RequestBody Client client) throws Exception {
 		return service.create(client);
 	}
+		
+	//	@PostMapping(
+//		        consumes = MediaType.APPLICATION_JSON_VALUE, 
+	//	        produces = MediaType.APPLICATION_JSON_VALUE)
+	//	public ResponseEntity<ClientDTO> create(@RequestBody ClientDTO clientDTO) throws Exception {
+	//	    ClientDTO savedClientDTO = service.create(clientDTO);
+	//	    return ResponseEntity.status(HttpStatus.CREATED).body(savedClientDTO);
+	//	}
+
 	
 	//Editar Cliente
 	@PutMapping( 
@@ -76,7 +86,8 @@ public class ClientsController {
 	        produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, String>> login(@RequestBody Client cliente) {
 	    Map<String, String> response = new HashMap<>();
-	    
+	    System.out.println(cliente.getUsuario());
+	    System.out.println(cliente.getSenha());
 	    if (service.login(cliente.getUsuario(), cliente.getSenha()) != null) {
 	        response.put("message", "Login bem-sucedido.");
 	        return ResponseEntity.ok(response);
