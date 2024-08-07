@@ -49,6 +49,15 @@ public class ClientServices {
 	public Client create(Client client) throws Exception {
 		logger.info("Creating one Client");
         client.formartarCnpj();
+        
+        if (client.getCnpj() == null || client.getCnpj().length() != 14) {
+            throw new Exception("O CNPJ deve ter exatamente 14 caracteres.");
+        }
+        
+        if (repository.findByCnpj(client.getCnpj()).isPresent()) {
+            throw new Exception("CNPJ já existe.");
+        }
+        
 		String status = client.getStatus().toUpperCase();
 	    if (!status.equals("ATIVO") && !status.equals("INATIVO")) {
 	        throw new Exception("Status deve ser 'ATIVO' ou 'INATIVO'.");

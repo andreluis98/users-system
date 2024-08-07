@@ -1,1 +1,31 @@
-<p>create works!</p>
+<form class="modal-content">
+    <h2 class="modal-title">Cadastrar Cliente</h2>
+    <div class="modal-form-group">
+      <label for="cnpj">CNPJ:</label>
+      <input type="text" id="cnpj" name="cnpj" [(ngModel)]="cnpj" minlength="14" maxlength="14" required>
+    </div>
+    <div class="modal-form-group">
+      <label for="razaoSocial">Razao Social:</label>
+      <input type="text" id="razaoSocial" name="razaoSocial" [(ngModel)]="razaoSocial" required>
+    </div>
+    <div class="modal-form-group">
+      <label for="username">Usuario:</label>
+      <input type="text" id="username" name="username" [(ngModel)]="username" required>
+    </div>
+    <div class="modal-form-group">
+      <label for="senha">Senha:</label>
+      <input type="password" id="senha" name="senha" [(ngModel)]="senha" required>
+    </div>
+    <div class="modal-form-group">
+        <label for="status">Status:</label>
+        <select id="status" name="status" [(ngModel)]="status" required>
+            <option value="ativo">Ativo</option>
+            <option value="inativo">Inativo</option>
+        </select>
+    </div>
+    <button type="button" class="modal-button" (click)="createClient(cnpj, razaoSocial, username, senha, status)" 
+            [ngClass]="{ 'disable-button' : !cnpj || cnpj.length < 14 || !razaoSocial  || !username || !senha || !status }">Cadastrar</button>
+  </form>
+
+  
+  

@@ -10,7 +10,10 @@ import { DeleteComponent } from './delete/delete.component';
 import { SearchCnpjComponent } from './search-cnpj/search-cnpj.component';
 import { ListComponent } from './list/list.component';
 import { FormsModule } from '@angular/forms';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CnpjPipe } from './components/pipe/cnpj.pipe';
+import { ViewDetailsComponent } from './view-details/view-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,13 +21,17 @@ import { FormsModule } from '@angular/forms';
     CreateComponent,
     DeleteComponent,
     SearchCnpjComponent,
-    ListComponent
+    ListComponent,
+    CnpjPipe,
+    ViewDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatMenuModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

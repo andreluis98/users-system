@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceApiService } from '../service/service-api.service';
 import { catchError } from 'rxjs';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create',
@@ -16,17 +18,9 @@ export class CreateComponent implements OnInit{
 
   client: any
 
-  constructor(private clientsService: ServiceApiService){}
+  constructor(private clientsService: ServiceApiService, private route: Router){}
   
-  ngOnInit(): void {
-    this.createClient(
-      "12345678000195",
-      "TEST COMPANY",
-      "andrem",
-      "123456",
-      "ATIVO",
-    );
-  }
+  ngOnInit(): void {}
 
   createClient(
     cnpj: string,
@@ -37,11 +31,30 @@ export class CreateComponent implements OnInit{
   ){
     this.clientsService.createdClient(cnpj, razaoSocial, usuario, senha, status).pipe(
       catchError(error => {
-        return error.error.message
+        console.log(error);
+        
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro!',
+          text: `${error.error.message}`,
+        })
+        return ''
       })
     ).subscribe(resp => {
       this.client = resp;
-      
+      Swal.fire({
+        icon: 'success',
+        title: 'Sucesso!',
+        text: 'Cliente Criado com sucesso!',
+      }).then((result) => {
+        if(result.isConfirmed){
+          this.route.navigate(['/list-all']);
+        }
+      });
     });
+  }
+
+  goBack() {
+    this.route.navigate(['/list-all']);
   }
 }

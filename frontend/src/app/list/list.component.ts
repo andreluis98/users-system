@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceApiService } from '../service/service-api.service';
 import { catchError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -9,32 +10,42 @@ import { catchError } from 'rxjs';
 })
 export class ListComponent implements OnInit {
   clients: any;
-  
-  constructor(private clientsService: ServiceApiService){}
-  
-  ngOnInit(){
+  showTable: boolean = false;
+  filteredProducts: any[] = [];
+
+  constructor(private clientsService: ServiceApiService, private route: Router) { }
+
+  ngOnInit() {
     this.getAllClients();
   }
 
-  getAllClients(){
+  getAllClients() {
     this.clientsService.getClientsList().pipe(
       catchError(error => {
+        this.showTable = false;
         return error.error.message
       })
     ).subscribe(resp => {
       this.clients = resp;
+      this.showTable = true;
     });
   }
 
-  deleteClient(id: number){
-    this.clientsService.deleteClient(id).pipe(
-      catchError(error => {
-        return error.error.message
-      })
-    ).subscribe(resp => {
-      this.getAllClients()
-    });
+  viewDetails() {
+  }
 
+  screenDelete(client: any) {
+    localStorage.setItem('client', JSON.stringify(client));
+    this.route.navigate(['/delete', client.id]);
+  }
+
+  screenCreate() {
+    this.route.navigate(['/create']);
+  }
+
+  searchByCnpj(client: any) {
+    localStorage.setItem('client', JSON.stringify(client));
+    this.route.navigate(['/view-details', client.id]);
   }
 
 }

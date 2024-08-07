@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceApiService } from '../service/service-api.service';
 import { catchError } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-search-cnpj',
@@ -9,12 +10,12 @@ import { catchError } from 'rxjs';
 })
 export class SearchCnpjComponent implements OnInit {
   clientsCNPJ: any;
-  
+  cnpj: string = '';
+  client: any;
   constructor(private clientsService: ServiceApiService){}
 
     
   ngOnInit(){
-    this.getClientByCnpj('123456789');
   }
 
   getClientByCnpj(cnpj: string){
@@ -24,6 +25,24 @@ export class SearchCnpjComponent implements OnInit {
       })
     ).subscribe(resp => {
       this.clientsCNPJ = resp;
+    });
+  }
+
+  searchByCnpj() {
+    this.clientsService.getClientByCnpj(this.cnpj).pipe(
+      catchError(error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro!',
+          text: 'CNPJ não encontrado. Verifique e tente novamente.',
+        })
+        this.client = null;
+        return ''
+      })
+    ).subscribe(client => {
+      this.client = client;
+      console.log(client);
+      
     });
   }
 

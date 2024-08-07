@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ServiceApiService } from '../service/service-api.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-delete',
@@ -9,20 +10,43 @@ import { catchError } from 'rxjs';
   styleUrls: ['./delete.component.css']
 })
 export class DeleteComponent implements OnInit {
-
-  constructor(private clientsService: ServiceApiService, private route: Router){}
-  
+  clienteId!: number;
+  client: any;
+  constructor(private clientsService: ServiceApiService, private route: Router, private router: ActivatedRoute){}
   ngOnInit(){
-    this.deleteClient(1);
+    const clientId = this.router.snapshot.params['id']; 
+    const clientData = localStorage.getItem('client'); 
+    if (clientData) {
+      this.client = JSON.parse(clientData);
+    }
   }
 
-  deleteClient(id: number){
+deleteClient(id:  number){
     this.clientsService.deleteClient(id).pipe(
       catchError(error => {
-        return error.error.message
+         Swal.fire({
+          icon: 'error',
+          title: 'Erro!',
+          text: `${error.message}`,
+        })
+        return ''
       })
     ).subscribe(resp => {
-    });
-
+      this.client = resp
+      Swal.fire({
+        icon: 'success',
+        title: 'Sucesso!',
+        text: 'Cliente excluído com sucesso!',
+      }).then((result) => {
+        if(result.isConfirmed){
+          this.route.navigate(['/list-all']);
+        }
+      });
+    })
   }
+
+  cancelDelete() {
+    this.route.navigate(['/list-all']); 
+  }
+
 }

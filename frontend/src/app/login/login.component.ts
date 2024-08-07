@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceApiService } from '../service/service-api.service';
 import { catchError } from 'rxjs';
+import { Router } from '@angular/router';
+import { AuthServiceService } from '../service/auth-service.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +12,12 @@ import { catchError } from 'rxjs';
 export class LoginComponent implements OnInit{
   username!: string;
   senha!: string;
-  constructor(private clientsService: ServiceApiService){}
+  errorMessage: string = '';
+  constructor(
+    private clientsService: ServiceApiService,
+    private authService: AuthServiceService,
+    private router: Router
+  ){}
   
   ngOnInit(): void {
   }
@@ -18,12 +25,12 @@ export class LoginComponent implements OnInit{
   login(user: string, pass: string){
     this.clientsService.getLogin(user, pass).pipe(
       catchError(error => {
-        console.error('Login failed', error);
-        return error.error.message
+        this.errorMessage = error.error.message;
+        return ''
       })
     ).subscribe(resp => {
-      console.log('Login successful', resp);
-      
+      this.authService.login();
+      this.router.navigate(['/list-all']);
     })
   }
 

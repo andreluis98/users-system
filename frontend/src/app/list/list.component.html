@@ -1,1 +1,44 @@
-<p>list works!</p>
+<table class="table" *ngIf="showTable">
+    <thead>
+        <tr>
+            <th>CNPJ</th>
+            <th>Razao Social</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let clients of clients" class="table-row">
+            <td>{{ clients?.cnpj | cnpj}}</td>
+            <td>{{ clients?.razaoSocial }}</td>
+            <td>{{ clients?.status }}</td>
+            <td>
+                <button><i class="fa-solid fa-trash" (click)="screenDelete(clients)"></i></button>
+                <button><i class="fa-solid fa-eye" (click)="searchByCnpj(clients)"></i></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table" *ngIf="!showTable">
+    <thead>
+        <tr>
+            <th>CNPJ</th>
+            <th>Razao Social</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td colspan="6">
+                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div>
+                </td>
+            </tr>
+    </tbody>
+</table>

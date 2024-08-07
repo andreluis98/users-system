@@ -54,15 +54,6 @@ public class ClientsController {
 	public Client create(@RequestBody Client client) throws Exception {
 		return service.create(client);
 	}
-		
-	//	@PostMapping(
-//		        consumes = MediaType.APPLICATION_JSON_VALUE, 
-	//	        produces = MediaType.APPLICATION_JSON_VALUE)
-	//	public ResponseEntity<ClientDTO> create(@RequestBody ClientDTO clientDTO) throws Exception {
-	//	    ClientDTO savedClientDTO = service.create(clientDTO);
-	//	    return ResponseEntity.status(HttpStatus.CREATED).body(savedClientDTO);
-	//	}
-
 	
 	//Editar Cliente
 	@PutMapping( 
@@ -86,15 +77,22 @@ public class ClientsController {
 	        produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, String>> login(@RequestBody Client cliente) {
 	    Map<String, String> response = new HashMap<>();
-	    System.out.println(cliente.getUsuario());
-	    System.out.println(cliente.getSenha());
-	    if (service.login(cliente.getUsuario(), cliente.getSenha()) != null) {
-	        response.put("message", "Login bem-sucedido.");
-	        return ResponseEntity.ok(response);
+	    
+	    Client authenticatedClient = service.login(cliente.getUsuario(), cliente.getSenha());
+
+	    if (authenticatedClient != null) {
+	        if ("ativo".toUpperCase().equals(authenticatedClient.getStatus())) {
+	            response.put("message", "Login bem-sucedido.");
+	            return ResponseEntity.ok(response);
+	        } else {
+	            response.put("message", "Usuário inativo.");
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+	        }
 	    } else {
 	        response.put("message", "Usuário ou senha incorretos.");
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 	    }
 	}
+
 	
 }
