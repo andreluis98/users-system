@@ -10,4 +10,7 @@ spring:
       ddl-auto: update
       properties:
         hibernate:
-          show-sql: false
+          show-sql: true 
+  sql:
+    init:
+      mode: always 

@@ -3,7 +3,7 @@
     <form (ngSubmit)="searchByCnpj()">
       <div>
         <label for="cnpj">CNPJ:</label>
-        <input type="text" id="cnpj" [(ngModel)]="cnpj" name="cnpj" placeholder="Digite o CNPJ sem pontos ou traços" required>
+        <input type="text" id="cnpj" [(ngModel)]="cnpj" name="cnpj" placeholder="Digite o CNPJ sem pontos, barras ou traços" required>
       </div>
       <button type="submit"
       [ngClass]="{ 'disable-button' : !cnpj }">Buscar</button>

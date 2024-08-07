@@ -41,8 +41,6 @@ export class SearchCnpjComponent implements OnInit {
       })
     ).subscribe(client => {
       this.client = client;
-      console.log(client);
-      
     });
   }
 

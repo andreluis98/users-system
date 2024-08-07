@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.system.dto.ClientDTO;
+import br.com.system.dto.LoginDTO;
 import br.com.system.model.Client;
 import br.com.system.services.ClientServices;
 
@@ -30,69 +31,71 @@ public class ClientsController {
 	private ClientServices service;
 
 	//Listar Todos os Clientes
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Client> findByAll(){
-		return service.findAll();
-	}
+	  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	    public List<ClientDTO> findByAll() {
+	        return service.findAll();
+	    }
 	
-	// Listar Cliente por Razao Social	
-		@GetMapping(value = "/razaoSocial/{razaoSocial}", produces = MediaType.APPLICATION_JSON_VALUE)
-		public List<Client> findByRazaoSocial(@PathVariable(value="razaoSocial") String razaoSocial) {
-			return service.findByRazaoSocial(razaoSocial);
-		}
+	  // Listar Cliente por Razao Social		  
+	    @GetMapping(value = "/razaoSocial/{razaoSocial}", produces = MediaType.APPLICATION_JSON_VALUE)
+	    public List<ClientDTO> findByRazaoSocial(@PathVariable(value = "razaoSocial") String razaoSocial) {
+	        return service.findByRazaoSocial(razaoSocial);
+	    }
 		
 		// Listar Cliente por CNPJ
-		@GetMapping(value = "/{cnpj}", produces = MediaType.APPLICATION_JSON_VALUE)
-		public Client findByCnpj(@PathVariable(value="cnpj") String cnpj) {
-			return service.findByCnpj(cnpj);
-		}
+	    @GetMapping(value = "/{cnpj}", produces = MediaType.APPLICATION_JSON_VALUE)
+	    public ClientDTO findByCnpj(@PathVariable(value = "cnpj") String cnpj) {
+	        return service.findByCnpj(cnpj);
+	    }
 	
-	//Criar Cliente
-	@PostMapping(
-			consumes= MediaType.APPLICATION_JSON_VALUE, 
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Client create(@RequestBody Client client) throws Exception {
-		return service.create(client);
-	}
+	    //Criar Cliente	    
+	    @PostMapping(
+	            consumes = MediaType.APPLICATION_JSON_VALUE,
+	            produces = MediaType.APPLICATION_JSON_VALUE)
+	    public ClientDTO create(@RequestBody Client client) throws Exception {
+	        return service.create(client);
+	    }    
 	
-	//Editar Cliente
-	@PutMapping( 
-			consumes= MediaType.APPLICATION_JSON_VALUE, 
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Client update(@RequestBody Client client) throws Exception {
-		return service.update(client);
-	}
+	    //Editar Cliente
+	    @PutMapping(
+	            consumes = MediaType.APPLICATION_JSON_VALUE,
+	            produces = MediaType.APPLICATION_JSON_VALUE)
+	    public ClientDTO update(@RequestBody Client client) throws Exception {
+	        return service.update(client);
+	    }
 	
-	//Excluir Clientes
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> delete(@PathVariable(value="id") Long id) throws Exception {
-		service.delete(id);
-		return ResponseEntity.noContent().build();
-	}
+	    //Excluir Clientes
+	    @DeleteMapping(value = "/{id}")
+	    public ResponseEntity<Map<String, String>> delete(@PathVariable(value = "id") Long id) throws Exception {
+	        service.delete(id);
+	        Map<String, String> response = new HashMap<>();
+	        response.put("message", "Item excluído com sucesso.");
+	        return ResponseEntity.ok(response);
+	    }
 	
-	//Login
-	@PostMapping(
-	        value = "/login",
-	        consumes = MediaType.APPLICATION_JSON_VALUE,
-	        produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, String>> login(@RequestBody Client cliente) {
-	    Map<String, String> response = new HashMap<>();
-	    
-	    Client authenticatedClient = service.login(cliente.getUsuario(), cliente.getSenha());
+	    //Login
+	    @PostMapping(
+	            value = "/login",
+	            consumes = MediaType.APPLICATION_JSON_VALUE,
+	            produces = MediaType.APPLICATION_JSON_VALUE)
+	    public ResponseEntity<Map<String, String>> login(@RequestBody LoginDTO loginDTO) {
+	        Map<String, String> response = new HashMap<>();
 
-	    if (authenticatedClient != null) {
-	        if ("ativo".toUpperCase().equals(authenticatedClient.getStatus())) {
-	            response.put("message", "Login bem-sucedido.");
-	            return ResponseEntity.ok(response);
+	        Client authenticatedClient = service.login(loginDTO.getUsuario(), loginDTO.getSenha());
+
+	        if (authenticatedClient != null) {
+	            if ("ativo".toUpperCase().equals(authenticatedClient.getStatus())) {
+	                response.put("message", "Login bem-sucedido.");
+	                return ResponseEntity.ok(response);
+	            } else {
+	                response.put("message", "Usuário inativo.");
+	                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+	            }
 	        } else {
-	            response.put("message", "Usuário inativo.");
+	            response.put("message", "Usuário ou senha incorretos.");
 	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 	        }
-	    } else {
-	        response.put("message", "Usuário ou senha incorretos.");
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 	    }
-	}
-
+	    
 	
 }

@@ -27,7 +27,7 @@
   .button-group {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Espaço entre os botões */
+    gap: 15px; 
   }
   
   .btn {
@@ -42,18 +42,18 @@
   }
   
   .btn-confirm {
-    background-color: #28a745; /* Verde */
+    background-color: #28a745; 
   }
   
   .btn-confirm:hover {
-    background-color: #218838; /* Verde escuro */
+    background-color: #218838; 
   }
   
   .btn-cancel {
-    background-color: #dc3545; /* Vermelho */
+    background-color: #dc3545; 
   }
   
   .btn-cancel:hover {
-    background-color: #c82333; /* Vermelho escuro */
+    background-color: #c82333;
   }
   

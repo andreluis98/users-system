@@ -13,7 +13,6 @@ export class ViewDetailsComponent implements OnInit{
   constructor(private clientsService: ServiceApiService, private route: Router, private router: ActivatedRoute){}
   ngOnInit(){ 
     const clientData = localStorage.getItem('client'); 
-    console.log('clientData', clientData);
     if (clientData) {
       this.client = JSON.parse(clientData);
     }
