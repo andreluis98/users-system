@@ -107,6 +107,3 @@ Após iniciar o backend e o frontend, você pode acessar a aplicação em [http:
 | DELETE  | /api/clientes/{id}          | Exclui um cliente pelo ID                  |
 | POST    | /api/login                  | Realiza o login do usuário                 |
 
-## Licença
-
-Este projeto está licenciado sob a MIT License.
