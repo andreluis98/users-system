@@ -48,6 +48,11 @@ users-system/
 - Node.js (para o frontend)
 - Docker e Docker Compose (opcional, mas recomendado)
 
+### Observações
+
+- O projeto foi todo desenvolvido em ambiente Windows. Caso for rodar em Linux, é necessário alterar o arquivo do Docker.
+- Quando inicializa o backend, é realizada uma carga de dados no banco através do arquivo `data.sql`. Para logar na aplicação, basta utilizar o usuário que estiver ativo no banco.
+
 ### Executando com Docker
 
 1. Clone este repositório:

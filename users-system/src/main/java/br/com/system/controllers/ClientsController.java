@@ -96,6 +96,4 @@ public class ClientsController {
 	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 	        }
 	    }
-	    
-	
 }

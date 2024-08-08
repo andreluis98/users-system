@@ -1,7 +1,6 @@
 package br.com.system.services;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
