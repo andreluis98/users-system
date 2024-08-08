@@ -105,10 +105,10 @@ Após iniciar o backend e o frontend, você pode acessar a aplicação em [http:
 
 | Método  | Endpoint                     | Descrição                                  |
 |---------|------------------------------|--------------------------------------------|
-| POST    | /api/clientes               | Cria um novo cliente                        |
-| GET     | /api/clientes               | Lista todos os clientes                    |
-| GET     | /api/clientes/{cnpj}        | Busca um cliente pelo CNPJ                 |
-| PUT     | /api/clientes               | Atualiza um cliente existente               |
-| DELETE  | /api/clientes/{id}          | Exclui um cliente pelo ID                  |
-| POST    | /api/login                  | Realiza o login do usuário                 |
-
+| POST    | /clients                     | Cria um novo cliente                        |
+| GET     | /clients                     | Lista todos os clientes                    |
+| GET     | /clients/razaoSocial/{razaoSocial} | Busca clientes por razão social        |
+| GET     | /clients/{cnpj}              | Busca um cliente pelo CNPJ                 |
+| PUT     | /clients                     | Atualiza um cliente existente               |
+| DELETE  | /clients/{id}                | Exclui um cliente pelo ID                  |
+| POST    | /clients/login               | Realiza o login do usuário                 |
