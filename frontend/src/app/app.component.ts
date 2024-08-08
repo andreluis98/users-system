@@ -29,4 +29,9 @@ export class AppComponent {
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+}
 }

@@ -24,6 +24,10 @@
     cursor: pointer;
 }
 
+.navbar-nav li.logout {
+    float: right;
+}
+
 .navbar-nav .nav-link {
     color: #6c757d;
     text-decoration: none;
