@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class ServiceApiService {
 
-  private baseUrl = 'http://localhost:8080/clients'
+  private baseUrl = 'http://localhost:8080/clients';
+
   constructor(private httpClient: HttpClient) { }
 
   //Listar todos o clients
@@ -23,13 +24,13 @@ export class ServiceApiService {
   //Login
   getLogin(
     usuario: string,
-    senha: string 
-  ){
+    senha: string
+  ) {
     const body = {
-      usuario : usuario,
-      senha : senha
+      usuario: usuario,
+      senha: senha
     }
-    
+
     return this.httpClient.post(`${this.baseUrl}/login`, body)
   }
 
@@ -40,7 +41,7 @@ export class ServiceApiService {
     usuario: string,
     senha: string,
     status: string,
-  ){
+  ) {
     const body = {
       cnpj: cnpj,
       razaoSocial: razaoSocial,
@@ -49,6 +50,22 @@ export class ServiceApiService {
       status: status,
     }
     return this.httpClient.post(`${this.baseUrl}`, body)
+  }
+
+  //Atualizar Cliente
+  updateClient(
+    id: number,
+    cnpj?: string,
+    razaoSocial?: string,
+    status?: string,
+  ) {
+    const body = {
+      id: id,
+      cnpj: cnpj,
+      razaoSocial: razaoSocial,
+      status: status,
+    }
+    return this.httpClient.put(`${this.baseUrl}`, body)
   }
 
   //Excluir Cliente

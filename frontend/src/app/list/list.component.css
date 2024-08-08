@@ -1,7 +1,5 @@
-/* Importação do FontAwesome */
 @import '../../../node_modules/@fortawesome/fontawesome-free/css/all.css';
 
-/* Estilos para o título da página */
 .page-title {
   font-size: 24px;
   font-weight: bold;
@@ -10,7 +8,6 @@
   display: flex;
 }
 
-/* Estilos para os filtros */
 .filters {
   display: flex;
   align-items: center;

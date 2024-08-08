@@ -9,7 +9,7 @@ import { AuthServiceService } from '../service/auth-service.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   username!: string;
   senha!: string;
   errorMessage: string = '';
@@ -17,12 +17,12 @@ export class LoginComponent implements OnInit{
     private clientsService: ServiceApiService,
     private authService: AuthServiceService,
     private router: Router
-  ){}
-  
+  ) { }
+
   ngOnInit(): void {
   }
 
-  login(user: string, pass: string){
+  login(user: string, pass: string) {
     this.clientsService.getLogin(user, pass).pipe(
       catchError(error => {
         this.errorMessage = error.error.message;

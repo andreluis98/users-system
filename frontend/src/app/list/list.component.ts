@@ -48,4 +48,9 @@ export class ListComponent implements OnInit {
     this.route.navigate(['/view-details', client.id]);
   }
 
+  screenUpdate(client: any) {
+    localStorage.setItem('client', JSON.stringify(client));
+    this.route.navigate(['/update', client.id]);
+  }
+
 }

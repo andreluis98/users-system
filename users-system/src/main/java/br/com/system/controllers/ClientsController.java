@@ -36,17 +36,17 @@ public class ClientsController {
 	        return service.findAll();
 	    }
 	
-	  // Listar Cliente por Razao Social		  
-	    @GetMapping(value = "/razaoSocial/{razaoSocial}", produces = MediaType.APPLICATION_JSON_VALUE)
+	  // Listar Cliente por Razao Social
+	  @GetMapping(value = "/razaoSocial/{razaoSocial}", produces = MediaType.APPLICATION_JSON_VALUE)
 	    public List<ClientDTO> findByRazaoSocial(@PathVariable(value = "razaoSocial") String razaoSocial) {
 	        return service.findByRazaoSocial(razaoSocial);
 	    }
 		
 		// Listar Cliente por CNPJ
-	    @GetMapping(value = "/{cnpj}", produces = MediaType.APPLICATION_JSON_VALUE)
-	    public ClientDTO findByCnpj(@PathVariable(value = "cnpj") String cnpj) {
-	        return service.findByCnpj(cnpj);
-	    }
+	  	@GetMapping(value = "/{cnpj}", produces = MediaType.APPLICATION_JSON_VALUE)
+		public Client findByCnpj(@PathVariable(value="cnpj") String cnpj) {
+			return service.findByCnpj(cnpj);
+		}
 	
 	    //Criar Cliente	    
 	    @PostMapping(

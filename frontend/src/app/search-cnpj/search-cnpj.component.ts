@@ -12,22 +12,12 @@ export class SearchCnpjComponent implements OnInit {
   clientsCNPJ: any;
   cnpj: string = '';
   client: any;
-  constructor(private clientsService: ServiceApiService){}
+  constructor(private clientsService: ServiceApiService) { }
 
-    
-  ngOnInit(){
+
+  ngOnInit() {
   }
-
-  getClientByCnpj(cnpj: string){
-    this.clientsService.getClientByCnpj(cnpj).pipe(
-      catchError(error => {
-        return error.error.message
-      })
-    ).subscribe(resp => {
-      this.clientsCNPJ = resp;
-    });
-  }
-
+  
   searchByCnpj() {
     this.clientsService.getClientByCnpj(this.cnpj).pipe(
       catchError(error => {

@@ -9,7 +9,7 @@ export class AuthServiceService {
 
   login() {
     this.loggedIn = true;
-    
+
   }
 
   logout() {

@@ -1,6 +1,7 @@
 package br.com.system.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -31,20 +32,23 @@ public class ClientServices {
 	// Listar Cliente por Razao Social
     public List<ClientDTO> findByRazaoSocial(String razaoSocial) {
         logger.info("Finding clients by Razao Social");
-        List<ClientDTO> clients = repository.findByRazaoSocial(razaoSocial).stream()
+        String normalizedInput = razaoSocial.replaceAll("\\s+", "").toLowerCase();
+        List<Client> clients = repository.findAll();
+        List<ClientDTO> filteredClients = clients.stream()
+        		 .filter(client -> client.getRazaoSocial().replaceAll("\\s+", "").toLowerCase().contains(normalizedInput))
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
-        if (clients.isEmpty()) {
+
+        if (filteredClients.isEmpty()) {
             throw new ResourceNotFoundException("No records found for this Razao Social!");
         }
-        return clients;
+        return filteredClients;
     }
     
     // Listar Cliente por CNPJ
-    public ClientDTO findByCnpj(String cnpj) {
+    public Client findByCnpj(String cnpj) {
         logger.info("Finding client by CNPJ");
         return repository.findByCnpj(cnpj)
-                .map(this::convertToDTO)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this CNPJ!"));
     }
 	

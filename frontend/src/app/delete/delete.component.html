@@ -1,11 +1,10 @@
 <h2 class="title">Excluir Cliente</h2>
 <div class="confirmation-container">
   <p class="confirmation-message">
-    Tem certeza que deseja excluir o cliente com o CNPJ <strong>{{ client?.cnpj }}</strong>?
+    Tem certeza que deseja excluir o cliente com o CNPJ <strong>{{ client?.cnpj | cnpj }}</strong>?
   </p>
   <div class="button-group">
-    <button class="btn btn-confirm" (click)="deleteClient(client.id)">Sim</button>
+    <button class="btn btn-confirm" (click)="deleteClient(client?.id)">Sim</button>
     <button class="btn btn-cancel" (click)="cancelDelete()">Não</button>
   </div>
 </div>
-

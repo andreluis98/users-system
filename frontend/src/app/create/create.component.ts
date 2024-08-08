@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css']
 })
-export class CreateComponent implements OnInit{
+export class CreateComponent implements OnInit {
   username!: string;
   senha!: string;
   cnpj!: string;
@@ -18,9 +18,9 @@ export class CreateComponent implements OnInit{
 
   client: any
 
-  constructor(private clientsService: ServiceApiService, private route: Router){}
-  
-  ngOnInit(): void {}
+  constructor(private clientsService: ServiceApiService, private route: Router) { }
+
+  ngOnInit(): void { }
 
   createClient(
     cnpj: string,
@@ -28,11 +28,9 @@ export class CreateComponent implements OnInit{
     usuario: string,
     senha: string,
     status: string,
-  ){
+  ) {
     this.clientsService.createdClient(cnpj, razaoSocial, usuario, senha, status).pipe(
       catchError(error => {
-        console.log(error);
-        
         Swal.fire({
           icon: 'error',
           title: 'Erro!',
@@ -47,7 +45,7 @@ export class CreateComponent implements OnInit{
         title: 'Sucesso!',
         text: 'Cliente Criado com sucesso!',
       }).then((result) => {
-        if(result.isConfirmed){
+        if (result.isConfirmed) {
           this.route.navigate(['/list-all']);
         }
       });

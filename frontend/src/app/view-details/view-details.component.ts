@@ -8,17 +8,17 @@ import { catchError } from 'rxjs';
   templateUrl: './view-details.component.html',
   styleUrls: ['./view-details.component.css']
 })
-export class ViewDetailsComponent implements OnInit{
+export class ViewDetailsComponent implements OnInit {
   client: any;
-  constructor(private clientsService: ServiceApiService, private route: Router, private router: ActivatedRoute){}
-  ngOnInit(){ 
-    const clientData = localStorage.getItem('client'); 
+  constructor(private clientsService: ServiceApiService, private route: Router, private router: ActivatedRoute) { }
+  ngOnInit() {
+    const clientData = localStorage.getItem('client');
     if (clientData) {
       this.client = JSON.parse(clientData);
     }
   }
 
-  getClientByCnpj(cnpj: string){
+  getClientByCnpj(cnpj: string) {
     this.clientsService.getClientByCnpj(cnpj).pipe(
       catchError(error => {
         return error.error.message
